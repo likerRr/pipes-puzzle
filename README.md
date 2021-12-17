@@ -1,1 +1,1 @@
-# pipes-puzzle
+# Pipes puzzle solution

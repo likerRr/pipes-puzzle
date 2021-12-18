@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 
 import PhaserGame from '../game/PhaserGame';
 import config from '../game/config';
+import GameScene from '../game/scenes/GameScene';
+import MenuScene from '../game/scenes/MenuScene';
 import PreloadScene from '../game/scenes/PreloadScene';
 
 const Game = () => {
@@ -11,7 +13,7 @@ const Game = () => {
     const phaserGame = new PhaserGame(config);
 
     if (divRef.current) {
-      const game = phaserGame.start(divRef.current, [PreloadScene]);
+      const game = phaserGame.start(divRef.current, [PreloadScene, MenuScene, GameScene]);
 
       return () => {
         game.destroy(true);

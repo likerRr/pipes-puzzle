@@ -1,4 +1,4 @@
-import { SCENE_PRELOAD } from '../../constants/sceneName';
+import { SCENE_MENU, SCENE_PRELOAD } from '../../constants/sceneName';
 import PipesTexture from '../resources/PipesTexture';
 
 class PreloadScene extends Phaser.Scene {
@@ -8,6 +8,10 @@ class PreloadScene extends Phaser.Scene {
 
   preload() {
     new PipesTexture(this).preload();
+  }
+
+  create() {
+    this.scene.start(SCENE_MENU);
   }
 }
 

@@ -5,7 +5,7 @@ class PhaserGame {
     private config: Phaser.Types.Core.GameConfig
   ) {}
 
-  start(container: HTMLElement, scenes: Array<Phaser.Scene> = []): Phaser.Game {
+  start(container: HTMLElement, scenes: Array<new () => Phaser.Scene> = []): Phaser.Game {
     return new Phaser.Game({
       ...this.config,
       parent: container,

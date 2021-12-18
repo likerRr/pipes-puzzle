@@ -1,11 +1,16 @@
 import Phaser from 'phaser';
 
-import { TEXTURE_PIPES } from '../../../constants/textureName';
+import { TEXTURE_PIPES_FRAME } from '../../../constants/textureName';
+import Pipe, { PipeVariant } from './Pipe';
 import PipeTile from './PipeTile';
 
-class CurvedPipe extends PipeTile {
-  constructor(scene: Phaser.Scene, x: number, y: number) {
-    super(scene, x, y, TEXTURE_PIPES, '┏', ['┏', '┓', '┛', '┗']);
+class CurvedPipe extends Pipe {
+  constructor(scene: Phaser.Scene, x: number, y: number, initialValue?: PipeVariant) {
+    super(
+      new PipeTile(scene, x, y, TEXTURE_PIPES_FRAME.Curved),
+      ['┏', '┓', '┛', '┗'],
+      initialValue,
+    );
   }
 }
 

@@ -16,6 +16,8 @@ type RotateOptions = {
   smooth: boolean,
 };
 
+export type PipeVariants = [Pipe0angle, Pipe90angle, Pipe180angle, Pipe360angle];
+
 const INITIAL_INDEX = 0;
 
 class Pipe {
@@ -23,7 +25,7 @@ class Pipe {
 
   constructor(
     private pipeTile: PipeTile,
-    private variants: [Pipe0angle, Pipe90angle, Pipe180angle, Pipe360angle],
+    private variants: PipeVariants,
     initialValue: PipeVariant = variants[INITIAL_INDEX],
   ) {
     if (initialValue !== variants[INITIAL_INDEX]) {

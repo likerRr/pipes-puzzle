@@ -28,7 +28,7 @@ class GameScene extends Phaser.Scene {
 
     const escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
-    escKey.on('down', () => {
+    escKey.on(Phaser.Input.Keyboard.Events.DOWN, () => {
       this.pause();
     });
   }

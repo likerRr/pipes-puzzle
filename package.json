@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "events": "3.3.0",
     "next": "12.0.7",
     "phaser": "3.55.2",
     "react": "17.0.2",

@@ -1,20 +1,13 @@
 import Phaser from 'phaser';
 
-import { SCENE_GAME } from '../../constants/sceneName';
 import MenuButton from './MenuButton';
 
 class StartMenuButton extends MenuButton {
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, y?: number) {
     super(scene, 'Start', {
       alignHorizontally: 'center',
-      top: 100,
+      top: y,
     });
-
-    this.setOnClickHandler(this.startGame);
-  }
-
-  private startGame() {
-    this.scene.scene.start(SCENE_GAME);
   }
 }
 

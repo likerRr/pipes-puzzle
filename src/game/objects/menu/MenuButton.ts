@@ -45,6 +45,16 @@ class MenuButton extends Phaser.GameObjects.Text {
     this.scene.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.off(Phaser.Input.Events.POINTER_DOWN, handler);
     });
+
+    return this;
+  }
+
+  private alignHorizontally(): MenuButton {
+    const { width } = this.parentContainer ?? this.scene.cameras.main;
+
+    this.setX(width / 2 - this.width / 2);
+
+    return this;
   }
 
   private applyOptions() {
@@ -55,12 +65,6 @@ class MenuButton extends Phaser.GameObjects.Text {
     if (typeof this.options.top === 'number') {
       this.setY(this.options.top);
     }
-  }
-
-  private alignHorizontally(): MenuButton {
-    this.setX(this.scene.cameras.main.width / 2 - this.width / 2);
-
-    return this;
   }
 
   private enableHoverEffect() {

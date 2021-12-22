@@ -23,6 +23,8 @@ const INITIAL_INDEX = 0;
 class Pipe {
   private currentVariantIndex: number = INITIAL_INDEX;
 
+  private onClickHandler: (() => void) | undefined;
+
   constructor(
     private pipeTile: PipeTile,
     private variants: PipeVariants,
@@ -33,14 +35,31 @@ class Pipe {
     }
   }
 
+  addToContainer(container: Phaser.GameObjects.Container) {
+    container.add(this.pipeTile);
+  }
+
   getCurrentVariant(): PipeVariant {
     return this.variants[this.currentVariantIndex];
   }
 
+  setOnClickHandler(handler: () => void) {
+    this.onClickHandler = handler;
+  }
+
   enableRotation() {
+    const onPointerDown = (p: Phaser.Input.Pointer) => {
+      if (p.leftButtonDown()) {
+        this.rotate();
+        this.onClickHandler?.();
+      }
+    };
+
     this.pipeTile.setInteractive();
-    this.pipeTile.on(Phaser.Input.Events.POINTER_DOWN, () => {
-      this.rotate();
+    this.pipeTile.on(Phaser.Input.Events.POINTER_DOWN, onPointerDown);
+
+    this.pipeTile.on(Phaser.GameObjects.Events.DESTROY, () => {
+      this.pipeTile.off(Phaser.Input.Events.POINTER_DOWN, onPointerDown);
     });
   }
 

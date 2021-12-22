@@ -31,8 +31,9 @@ class MenuScene extends Phaser.Scene {
     }
   }
 
-  private startGame() {
-    this.scene.start(SCENE_GAME);
+    const escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+
+    escKey.on(Phaser.Input.Keyboard.Events.DOWN, () => data.resume());
   }
 }
 

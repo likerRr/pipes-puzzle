@@ -17,11 +17,21 @@ class BrowserWebSocketService implements WebSocketService {
 
     const ws = new WebSocket(this.config.address);
 
-    ws.addEventListener('open', () => {
+    const onOpen = () => {
       this.config.onOpen?.();
       this.flushQueue();
-    });
+    }
 
+    const onClose = () => {
+      ws.removeEventListener('open', onOpen);
+      ws.removeEventListener('close', onClose);
+
+      this.ws = null;
+      this.config.onClose?.();
+    };
+
+    ws.addEventListener('open', onOpen);
+    ws.addEventListener('close', onClose);
 
     this.ws = ws;
   }

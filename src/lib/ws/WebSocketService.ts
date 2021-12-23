@@ -2,6 +2,7 @@ export type SocketData = string;
 
 export type WebSocketConfig = {
   address: string,
+  onClose?(): void,
   onOpen?(): void,
 }
 

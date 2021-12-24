@@ -128,7 +128,7 @@ class GameScene extends Phaser.Scene {
             targets: container,
             x: containerInitialPos.x,
             y: containerInitialPos.y,
-            ease: 'Power2',
+            ease: Phaser.Math.Easing.Cubic.Out,
             duration: 300,
           });
         }

@@ -2,8 +2,9 @@ import Phaser from 'phaser';
 
 import { SCENE_END_GAME } from '../../constants/sceneName';
 import EndGameUI from '../features/endGameScene/EndGameUI';
-import Game from '../features/gameScene/Game';
-import startNewGame from '../features/gameScene/startNewGame';
+import Game from '../features/game/Game';
+import GameService from '../features/game/GameService';
+import WsClientRegistry from '../features/registry/WsClientRegistry';
 import { MapDoneData } from './transition/gameTransitionData';
 
 class EndGameScene extends Phaser.Scene {
@@ -12,8 +13,10 @@ class EndGameScene extends Phaser.Scene {
   }
 
   create(data: MapDoneData) {
+    const wsClient = WsClientRegistry.getWsClient(this.registry);
+    const gameService = new GameService(this, wsClient);
     const ui = new EndGameUI(this, () => {
-      startNewGame(this, Game.getNextLevel(data.level));
+      gameService.startNewGame(Game.getNextLevel(data.level));
     });
 
     ui.show(data.password);

@@ -51,7 +51,6 @@ class MapDrawer {
           if (pipeFactory.pattern.includes(col)) {
             const pipe = pipeFactory.create(
               scene,
-              // Draw from the beginning, not from pipe position
               x * PIPE_WIDTH,
               y * PIPE_WIDTH,
               col,

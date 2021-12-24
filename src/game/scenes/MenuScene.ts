@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
 
 import { SCENE_MENU } from '../../constants/sceneName';
-import Game from '../features/gameScene/Game';
-import startNewGame from '../features/gameScene/startNewGame';
+import Game from '../features/game/Game';
+import GameService from '../features/game/GameService';
+import WsClientRegistry from '../features/registry/WsClientRegistry';
 import OrderedGroup from '../objects/group/OrderedGroup';
 import ContinueMenuButton from '../objects/menu/ContinueMenuButton';
 import ControlsDescription from '../objects/menu/ControlsDescription';
@@ -48,8 +49,11 @@ class MenuScene extends Phaser.Scene {
         orderedGroup.add(text);
       }
 
+      const wsClient = WsClientRegistry.getWsClient(this.registry);
+      const gameService = new GameService(this, wsClient);
+
       orderedGroup.add([
-        new StartMenuButton(this).setOnClickHandler(() => startNewGame(this, Game.STARTING_LEVEL)),
+        new StartMenuButton(this).setOnClickHandler(() => gameService.startNewGame(Game.STARTING_LEVEL)),
         new ControlsDescription(this),
       ]);
     }

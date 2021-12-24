@@ -5,3 +5,8 @@ export interface GamePauseData {
 
   restart(): void,
 }
+
+export interface MapDoneData {
+  level: number,
+  password: string,
+}

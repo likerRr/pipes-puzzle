@@ -3,6 +3,7 @@ import BrowserWebSocketService from '../../lib/ws/BrowserWebSocketService';
 import WebSocketClient from '../../lib/wsClient/WebSocketClient';
 import Game from '../features/gameScene/Game';
 import WsClientRegistry from '../features/registry/WsClientRegistry';
+import FireworksTexture from '../objects/fireworks/FireworksTexture';
 import PipesTexture from '../resources/PipesTexture';
 
 class PreloadScene extends Phaser.Scene {
@@ -12,6 +13,7 @@ class PreloadScene extends Phaser.Scene {
 
   preload() {
     new PipesTexture(this).preload();
+    new FireworksTexture(this).preload();
   }
 
   create() {

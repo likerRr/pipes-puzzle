@@ -148,9 +148,8 @@ class GameScene extends Phaser.Scene {
     });
 
     wsClient.on<MessageVerifyData>(Message.Verify, data => {
-      // TODO debug
       if (data.isIncorrect) {
-        // wsClient.send(WebSocketClient.getMap());
+        this.cameras.main.shake(200, 0.01);
       }
 
       if (data.isOk) {

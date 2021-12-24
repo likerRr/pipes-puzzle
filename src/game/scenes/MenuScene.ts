@@ -31,7 +31,7 @@ class MenuScene extends Phaser.Scene {
         new QuitMenuButton(this).setOnClickHandler(() => Game.restartScenesToMenu(this)),
       ]);
     } else {
-      if (!data.wasted) {
+      if (data.wasted) {
         const text = this.scene.scene.add.text(0, 0, 'Too many attempts. You lose!', { align: 'center', font: '32px Arial', color: 'red' });
 
         this.tweens.add({

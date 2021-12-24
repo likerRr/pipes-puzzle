@@ -32,6 +32,8 @@ class MenuScene extends Phaser.Scene {
         new QuitMenuButton(this).setOnClickHandler(() => Game.restartScenesToMenu(this)),
         new ControlsDescription(this),
       ]);
+
+      this.addCloseMenuEvent(data);
     } else {
       if (data.wasted) {
         const text = this.scene.scene.add.text(0, 0, 'Too many attempts. You lose!', { align: 'center', font: '48px Arial', color: 'red' });
@@ -51,8 +53,6 @@ class MenuScene extends Phaser.Scene {
         new ControlsDescription(this),
       ]);
     }
-
-    this.addCloseMenuEvent(data);
   }
 
   private addCloseMenuEvent(data: GameResumable) {

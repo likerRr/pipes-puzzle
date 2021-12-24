@@ -40,7 +40,7 @@ class MenuButton extends Phaser.GameObjects.Text {
   }
 
   setOnClickHandler(handler: MenuButtonOnClickHandler) {
-    this.once(Phaser.Input.Events.POINTER_DOWN, handler);
+    this.on(Phaser.Input.Events.POINTER_DOWN, handler);
 
     this.scene.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.off(Phaser.Input.Events.POINTER_DOWN, handler);

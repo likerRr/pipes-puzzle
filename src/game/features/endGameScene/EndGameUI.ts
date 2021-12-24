@@ -23,47 +23,7 @@ class EndGameUI {
     this.createUI();
   }
 
-  createUI() {
-    this.createContainer();
-    this.createOverlay();
-    this.createText();
-  }
-
-  createContainer() {
-    this.container = this.scene.add.container(0, 0)
-      .setAlpha(0)
-      .setInteractive(
-        new Phaser.Geom.Rectangle(0,0, this.scene.cameras.main.width, this.scene.cameras.main.height),
-        Phaser.Geom.Rectangle.Contains,
-      )
-      .setDepth(2);
-  }
-
-  createOverlay() {
-    const overlay = this.scene.add.rectangle(
-      0,
-      0,
-      this.scene.cameras.main.width,
-      this.scene.cameras.main.height,
-      Phaser.Display.Color.RGBStringToColor('rgb(53, 181, 22)').color,
-    );
-
-    overlay.setOrigin(0, 0).setAlpha(.7);
-
-    this.container.add(overlay);
-    this.overlay = overlay;
-  }
-
-  createText() {
-    const text = this.scene.add.text(0, 0, '', { align: 'center', font: '32px Arial' });
-
-    this.container.add(text);
-    this.text = text;
-
-    this.updateText(this.getText());
-  }
-
-  getText(password: string = ''): string {
+  private static getText(password: string = ''): string {
     return `Congratulations! The password is "${password}"\n\nCLICK to continue`;
   }
 
@@ -82,8 +42,48 @@ class EndGameUI {
     this.fireworks.show(this.scene.scale.width / 2, this.scene.scale.height / 2);
   }
 
+  private createUI() {
+    this.createContainer();
+    this.createOverlay();
+    this.createText();
+  }
+
+  private createContainer() {
+    this.container = this.scene.add.container(0, 0)
+      .setAlpha(0)
+      .setInteractive(
+        new Phaser.Geom.Rectangle(0,0, this.scene.cameras.main.width, this.scene.cameras.main.height),
+        Phaser.Geom.Rectangle.Contains,
+      )
+      .setDepth(2);
+  }
+
+  private createOverlay() {
+    const overlay = this.scene.add.rectangle(
+      0,
+      0,
+      this.scene.cameras.main.width,
+      this.scene.cameras.main.height,
+      Phaser.Display.Color.RGBStringToColor('rgb(53, 181, 22)').color,
+    );
+
+    overlay.setOrigin(0, 0).setAlpha(.7);
+
+    this.container.add(overlay);
+    this.overlay = overlay;
+  }
+
+  private createText() {
+    const text = this.scene.add.text(0, 0, '', { align: 'center', font: '32px Arial' });
+
+    this.container.add(text);
+    this.text = text;
+
+    this.updateText(EndGameUI.getText());
+  }
+
   private updateText(text: string) {
-    this.text.setText(this.getText(text));
+    this.text.setText(EndGameUI.getText(text));
 
     Phaser.Display.Align.In.Center(this.text, this.overlay);
   }

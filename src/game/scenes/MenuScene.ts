@@ -8,9 +8,9 @@ import ContinueMenuButton from '../objects/menu/ContinueMenuButton';
 import QuitMenuButton from '../objects/menu/QuitMenuButton';
 import RestartMenuButton from '../objects/menu/RestartMenuButton';
 import StartMenuButton from '../objects/menu/StartMenuButton';
-import { GamePauseData } from './transition/gameTransitionData';
+import { GamePauseData, GameWastedData } from './transition/gameTransitionData';
 
-type MenuSceneData = GamePauseData;
+type MenuSceneData = GamePauseData & GameWastedData;
 
 type GameResumable = Pick<MenuSceneData, "resume">;
 
@@ -31,6 +31,19 @@ class MenuScene extends Phaser.Scene {
         new QuitMenuButton(this).setOnClickHandler(() => Game.restartScenesToMenu(this)),
       ]);
     } else {
+      if (!data.wasted) {
+        const text = this.scene.scene.add.text(0, 0, 'Too many attempts. You lose!', { align: 'center', font: '32px Arial', color: 'red' });
+
+        this.tweens.add({
+          alpha: 0,
+          ease: Phaser.Math.Easing.Cubic.Out,
+          duration: 2000,
+          targets: text,
+        });
+
+        orderedGroup.add(text);
+      }
+
       orderedGroup.add([
         new StartMenuButton(this).setOnClickHandler(() => startNewGame(this, Game.STARTING_LEVEL)),
       ]);

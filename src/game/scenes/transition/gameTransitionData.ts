@@ -10,3 +10,7 @@ export interface MapDoneData {
   level: number,
   password: string,
 }
+
+export interface GameWastedData {
+  wasted: boolean,
+}

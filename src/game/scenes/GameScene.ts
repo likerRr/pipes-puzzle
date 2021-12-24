@@ -159,8 +159,9 @@ class GameScene extends Phaser.Scene {
       }
 
       if (data.isLimit) {
-        // TODO pass params, like "wasted"
-        this.scene.start(SCENE_MENU);
+        this.scene.start(SCENE_MENU, {
+          wasted: true,
+        });
       }
     });
   }

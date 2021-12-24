@@ -141,12 +141,6 @@ class GameScene extends Phaser.Scene {
       this.pause(sceneData.level);
     });
 
-    wsClient.on<MessageRotateData>(Message.Rotate, isOk => {
-      if (!isOk) {
-        // TODO show error? restart?
-      }
-    });
-
     wsClient.on<MessageVerifyData>(Message.Verify, data => {
       if (data.isIncorrect) {
         this.cameras.main.shake(200, 0.01);

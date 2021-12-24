@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 
-const Game = dynamic(() => import('../src/components/Game'), { ssr: false });
+const PipesPuzzle = dynamic(() => import('../src/components/PipesPuzzle'), { ssr: false });
 
-const Home: NextPage = () => <Game />;
+const Home: NextPage = () => <PipesPuzzle />;
 
 export default Home;

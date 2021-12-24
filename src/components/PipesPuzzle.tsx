@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import PhaserGame from '../game/PhaserGame';
 import config from '../game/config';
 import EndGameScene from '../game/scenes/EndGameScene';
-import GameScene from '../game/scenes/GameScene';
+import GameScene from '../game/features/gameScene/GameScene';
 import MenuScene from '../game/scenes/MenuScene';
 import PreloadScene from '../game/scenes/PreloadScene';
 

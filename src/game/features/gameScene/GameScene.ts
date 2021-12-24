@@ -1,18 +1,17 @@
 import Phaser from 'phaser';
 
-import difficulty from '../../constants/difficulty';
-import { SCENE_END_GAME, SCENE_GAME, SCENE_MENU } from '../../constants/sceneName';
-import { Message, MessageRotateData, MessageVerifyData } from '../../lib/wsClient/messages/Message';
-import WebSocketClient from '../../lib/wsClient/WebSocketClient';
-import startNewGame from '../features/gameScene/startNewGame';
-import MapDrawer from '../features/map/MapDrawer';
-import MatrixPresenter from '../features/map/MatrixPresenter';
-import MatrixMask from '../features/map/MatrixMask';
-import WsClientRegistry from '../features/registry/WsClientRegistry';
-import Container from '../../lib/phaser/Container';
-import SubmitMenuButton from '../objects/menu/SubmitMenuButton';
-import { GamePauseData, MapDoneData } from './transition/gameTransitionData';
-import { MenuStartGameData } from './transition/menuTransitionData';
+import { SCENE_END_GAME, SCENE_GAME, SCENE_MENU } from '../../../constants/sceneName';
+import { Message, MessageVerifyData } from '../../../lib/wsClient/messages/Message';
+import WebSocketClient from '../../../lib/wsClient/WebSocketClient';
+import GameSceneUI from './GameSceneUI';
+import startNewGame from './startNewGame';
+import MapDrawer from '../map/MapDrawer';
+import MatrixPresenter from '../map/MatrixPresenter';
+import MatrixMask from '../map/MatrixMask';
+import WsClientRegistry from '../registry/WsClientRegistry';
+import Container from '../../../lib/phaser/Container';
+import { GamePauseData, MapDoneData } from '../../scenes/transition/gameTransitionData';
+import { MenuStartGameData } from '../../scenes/transition/menuTransitionData';
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -28,14 +27,16 @@ class GameScene extends Phaser.Scene {
       visibleRows: 10,
     });
     const wsClient = WsClientRegistry.getWsClient(this.registry);
-    const submitButton = new SubmitMenuButton(this, this.scale.height - 100);
     const mapWidth = matrixPresenter.getWidth();
     const mapHeight = matrixPresenter.getHeight();
 
-    this.add.text(30, 30, `${difficulty[sceneData.level]} (${mapWidth}x${mapHeight})`, { font: '32px Arial' });
-
-    submitButton.setOnClickHandler(() => {
-      wsClient.send(WebSocketClient.getVerify());
+    const ui = new GameSceneUI(this, {
+      level: sceneData.level,
+      sizeH: mapWidth,
+      sizeV: mapHeight,
+      onSubmitClick() {
+        wsClient.send(WebSocketClient.getVerify());
+      },
     });
 
     const mapDrawer = new MapDrawer(this, {
@@ -45,56 +46,52 @@ class GameScene extends Phaser.Scene {
       },
     });
 
-    const textHorizontal = this.add.text(0, 0, '', { font: '24px Arial' });
-    const textVertical = this.add.text(0, 0, '', { font: '24px Arial' });
-
-    const redrawMap = () => {
+    const drawMap = () => {
       mapDrawer.draw(matrixMask.apply());
       mapDrawer.withContainer(container => Container.alignInCamera(container, this.cameras.main));
 
       const bounds = mapDrawer.getBounds();
       const mask = matrixMask.getBounds();
-      const littleMargin = 10;
 
       if (mapWidth > mask.visibleCols) {
-        textHorizontal.setText(`${mask.colsOffset}-${mask.colsOffset + mask.visibleCols}`);
-        textHorizontal.setPosition(
-          bounds.x + bounds.width - textHorizontal.width,
-          bounds.y - textHorizontal.height - littleMargin,
-        );
+        ui.updateHorizontalMapLegend({
+          atX: bounds.x + bounds.width,
+          atY: bounds.y,
+          text: `${mask.colsOffset}-${mask.colsOffset + mask.visibleCols}`,
+        });
       }
 
       if (mapHeight > mask.visibleRows) {
-        textVertical.setText(`${mask.rowsOffset}-${mask.rowsOffset + mask.visibleRows}`);
-        textVertical.setPosition(
-          bounds.x - textVertical.width - littleMargin,
-          bounds.y + bounds.height - textVertical.height,
-        );
+        ui.updateVerticalMapLegend({
+          atX: bounds.x,
+          atY: bounds.y + bounds.height,
+          text: `${mask.rowsOffset}-${mask.rowsOffset + mask.visibleRows}`,
+        });
       }
     }
 
-    redrawMap();
+    drawMap();
 
     const cursors = this.input.keyboard.createCursorKeys();
 
     cursors.right.on(Phaser.Input.Keyboard.Events.DOWN, () => {
       matrixMask.moveRight(1);
-      redrawMap();
+      drawMap();
     });
 
     cursors.left.on(Phaser.Input.Keyboard.Events.DOWN, () => {
       matrixMask.moveLeft(1);
-      redrawMap();
+      drawMap();
     });
 
     cursors.down.on(Phaser.Input.Keyboard.Events.DOWN, () => {
       matrixMask.moveDown(1);
-      redrawMap();
+      drawMap();
     });
 
     cursors.up.on(Phaser.Input.Keyboard.Events.DOWN, () => {
       matrixMask.moveUp(1);
-      redrawMap();
+      drawMap();
     });
 
     this.input.on(Phaser.Input.Events.POINTER_MOVE, (p: Phaser.Input.Pointer) => {

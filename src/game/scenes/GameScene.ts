@@ -50,7 +50,7 @@ class GameScene extends Phaser.Scene {
 
     const redrawMap = () => {
       mapDrawer.draw(matrixMask.apply());
-      mapDrawer.withContainer(container => Container.alignInCameraCenter(container, this.cameras.main));
+      mapDrawer.withContainer(container => Container.alignInCamera(container, this.cameras.main));
 
       const bounds = mapDrawer.getBounds();
       const mask = matrixMask.getBounds();

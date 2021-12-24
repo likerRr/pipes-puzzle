@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 
+import Container from '../../../lib/phaser/Container';
+
 type OrderedGroupConfig = {
   padding: number,
 };
@@ -9,7 +11,7 @@ const defaultConfig = {
 };
 
 class OrderedGroup {
-  private container: Phaser.GameObjects.Container;
+  private readonly container: Phaser.GameObjects.Container;
 
   constructor(
     private scene: Phaser.Scene,
@@ -18,12 +20,30 @@ class OrderedGroup {
     private config: OrderedGroupConfig = defaultConfig
   ) {
     this.container = scene.add.container(x, y);
+
+    this.updateLayout();
   }
 
   add<T extends Phaser.GameObjects.Text>(object: T | Array<T>) {
     const objects: Array<T> = Array.isArray(object) ? object : [object];
 
     objects.forEach(gameObject => this.push(gameObject));
+
+    this.updateLayout();
+  }
+
+  updateLayout() {
+    Container.alignInCamera(this.container, this.scene.cameras.main, 'x');
+
+    this.alignItemsHorizontally();
+  }
+
+  alignItemsHorizontally() {
+    const bounds = this.container.getBounds();
+
+    this.container.iterate((gameObject: Phaser.GameObjects.Text) => {
+      gameObject.setX(bounds.width / 2 - gameObject.width / 2);
+    });
   }
 
   private push<T extends Phaser.GameObjects.Text>(gameObject: T) {

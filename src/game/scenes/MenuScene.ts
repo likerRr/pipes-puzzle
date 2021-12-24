@@ -5,6 +5,7 @@ import Game from '../features/gameScene/Game';
 import startNewGame from '../features/gameScene/startNewGame';
 import OrderedGroup from '../objects/group/OrderedGroup';
 import ContinueMenuButton from '../objects/menu/ContinueMenuButton';
+import ControlsDescription from '../objects/menu/ControlsDescription';
 import QuitMenuButton from '../objects/menu/QuitMenuButton';
 import RestartMenuButton from '../objects/menu/RestartMenuButton';
 import StartMenuButton from '../objects/menu/StartMenuButton';
@@ -29,15 +30,16 @@ class MenuScene extends Phaser.Scene {
         new ContinueMenuButton(this).setOnClickHandler(() => data.resume()),
         new RestartMenuButton(this).setOnClickHandler(() => data.restart()),
         new QuitMenuButton(this).setOnClickHandler(() => Game.restartScenesToMenu(this)),
+        new ControlsDescription(this),
       ]);
     } else {
       if (data.wasted) {
-        const text = this.scene.scene.add.text(0, 0, 'Too many attempts. You lose!', { align: 'center', font: '32px Arial', color: 'red' });
+        const text = this.scene.scene.add.text(0, 0, 'Too many attempts. You lose!', { align: 'center', font: '48px Arial', color: 'red' });
 
         this.tweens.add({
           alpha: 0,
           ease: Phaser.Math.Easing.Cubic.Out,
-          duration: 2000,
+          duration: 3000,
           targets: text,
         });
 
@@ -46,6 +48,7 @@ class MenuScene extends Phaser.Scene {
 
       orderedGroup.add([
         new StartMenuButton(this).setOnClickHandler(() => startNewGame(this, Game.STARTING_LEVEL)),
+        new ControlsDescription(this),
       ]);
     }
 

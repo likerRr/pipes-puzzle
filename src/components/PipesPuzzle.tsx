@@ -32,7 +32,10 @@ const PipesPuzzle = () => {
   }, []);
 
   return (
-    <div ref={divRef} />
+    <>
+      <div ref={divRef} />
+      <div style={{ textAlign: 'center' }}>&copy; <a href="https://github.com/likerRr">likerRr</a> 2021</div>
+    </>
   );
 };
 

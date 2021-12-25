@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import { SCENE_ENTER_CODE, SCENE_MENU } from '../../../constants/sceneName';
+import { TEXTURE_LOGO } from '../../../constants/textureName';
 import Device from '../device/Device';
 import EnterCodeSceneCreateData from '../enterCodeScene/EnterCodeSceneCreateData';
 import Game from '../game/Game';
@@ -30,6 +31,8 @@ class MenuScene extends Phaser.Scene {
     const controlsDescription = new ControlsDescription(this, device);
     const progressStorage = new ProgressLocalStorage();
     const progressManager = new ProgressManager(progressStorage);
+
+    this.scene.scene.add.image(this.cameras.main.width / 2, 100, TEXTURE_LOGO);
 
     if (data.isPause) {
       orderedGroup.add([

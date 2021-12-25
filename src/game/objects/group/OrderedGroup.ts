@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import Container from '../../../lib/phaser/Container';
 
 type OrderedGroupConfig = {
-  direction: 'vertical' | 'horizontal',
+  direction?: 'vertical' | 'horizontal',
   padding?: number,
 };
 

@@ -4,7 +4,7 @@ import MenuButton from './MenuButton';
 
 class EnterCodeMenuButton extends MenuButton {
   constructor(scene: Phaser.Scene, y?: number) {
-    super(scene, 'Enter code', {
+    super(scene, 'Enter password', {
       alignHorizontally: 'center',
       top: y,
     });

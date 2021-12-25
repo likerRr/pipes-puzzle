@@ -39,7 +39,7 @@ class EnterCodeSceneUI {
   }
 
   private drawInstructions() {
-    const text = this.scene.add.text(0, 0, 'Type a code:', { font: '24px Arial' });
+    const text = this.scene.add.text(0, 0, 'Type a password:', { font: '24px Arial' });
 
     this.orderedGroup.add(text);
   }
@@ -77,9 +77,13 @@ class EnterCodeSceneUI {
   private initKeyboardControls(props: InitKeyboardProps) {
     this.scene.input.keyboard.on(Phaser.Input.Keyboard.Events.ANY_KEY_DOWN, (e: KeyboardEvent) => {
       if (e.keyCode === Phaser.Input.Keyboard.KeyCodes.V && e.ctrlKey) {
-        const promise = navigator.clipboard.readText();
+        try {
+          const promise = navigator.clipboard.readText();
 
-        promise.then(text => this.updateTextCode(text));
+          promise.then(text => this.updateTextCode(text));
+        } catch (err) {
+          // clipboard not supported or access haven't been granted
+        }
 
         return;
       }

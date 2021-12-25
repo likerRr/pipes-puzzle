@@ -40,7 +40,7 @@
             }
         },
         {
-            "filename": "┏",
+            "filename": "╸",
             "frame": {
                 "w": 64,
                 "h": 64,
@@ -53,7 +53,7 @@
             }
         },
         {
-            "filename": "╸",
+            "filename": "┏",
             "frame": {
                 "w": 64,
                 "h": 64,
@@ -65,9 +65,5 @@
                 "y": 0.5
             }
         }
-    ],
-    "meta": {
-        "description": "Atlas generado con Atlas Packer Gamma V2",
-        "web": "https://gammafp.github.io/atlas-packer-phaser/"
-    }
+    ]
 }

@@ -1,4 +1,7 @@
 # Pipes puzzle solution
+
+[TASK](https://github.com/evolution-gaming/recruitment/blob/master/frontend/Pipes.md)
+
 [DEMO](https://pipes-puzzle.vercel.app/)
 
 ## Installation

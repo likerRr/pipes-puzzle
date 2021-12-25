@@ -4,7 +4,8 @@ import { Swipe } from 'phaser3-rex-plugins/plugins/gestures';
 import difficulty from '../../../constants/difficulty';
 import { SCENE_END_GAME, SCENE_GAME, SCENE_MENU } from '../../../constants/sceneName';
 import Container from '../../../lib/phaser/Container';
-import { MenuButtonOnClickHandler } from '../../objects/menu/MenuButton';
+import OrderedGroup from '../../objects/group/OrderedGroup';
+import MenuButton, { MenuButtonOnClickHandler } from '../../objects/menu/MenuButton';
 import SubmitMenuButton from '../../objects/menu/SubmitMenuButton';
 import Device from '../device/Device';
 import EndGameSceneCreateData from '../endGameScene/EndGameSceneCreateData';
@@ -20,7 +21,7 @@ type Swipeable = {
   up: boolean,
 }
 
-export type SubmitButtonProps = {
+export type MenuProps = {
   onSubmitClick: MenuButtonOnClickHandler,
 }
 
@@ -30,7 +31,7 @@ export type PauseControlsProps = {
 
 export type ControlsProps = PauseControlsProps;
 
-export type GameSceneUIProps = PauseControlsProps & SubmitButtonProps;
+export type GameSceneUIProps = PauseControlsProps & MenuProps;
 
 export type MapLegendProps = {
   atX: number,
@@ -63,7 +64,7 @@ class GameSceneUI {
 
   draw(props: GameSceneUIProps) {
     this.createDifficultyLabel();
-    this.createSubmitButton(props);
+    this.createMenu(props);
     this.createMapLegend();
     this.drawMap();
     this.initControls(props);
@@ -119,10 +120,18 @@ class GameSceneUI {
     this.scene.add.text(30, 30, `${difficulty[this.level]} (${this.mapWidth}x${this.mapHeight})`, { font: '32px Arial' });
   }
 
-  private createSubmitButton({ onSubmitClick }: SubmitButtonProps) {
-    const submitButton = new SubmitMenuButton(this.scene, this.scene.cameras.main.height - 100);
+  private createMenu({ onSubmitClick, onPause }: MenuProps & PauseControlsProps) {
+    const submitButton = new SubmitMenuButton(this.scene);
+    const pauseButton = new MenuButton(this.scene, 'Pause');
+    const container = new OrderedGroup(this.scene, 0, this.scene.cameras.main.height - 140, {
+      direction: 'horizontal',
+      padding: 100,
+    });
+
+    container.add([submitButton, pauseButton]);
 
     submitButton.setOnClickHandler(onSubmitClick);
+    pauseButton.setOnClickHandler(() => onPause(this.level));
   }
 
   private drawMap() {

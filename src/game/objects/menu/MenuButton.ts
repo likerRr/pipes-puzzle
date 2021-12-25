@@ -26,7 +26,7 @@ class MenuButton extends Phaser.GameObjects.Text {
   constructor(
     scene: Phaser.Scene,
     text: string | string[],
-    private options: MenuButtonOptions,
+    private options: MenuButtonOptions = {},
   ) {
     super(scene, 0, 0, text, defaultStyle);
 

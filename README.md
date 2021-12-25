@@ -1,4 +1,5 @@
 # Pipes puzzle solution
+[DEMO](https://pipes-puzzle.vercel.app/)
 
 ## Installation
 ```shell
@@ -29,6 +30,9 @@ npm run start
 2. DefinitelyWarm
 
 ## Implemented features
+
+### Hand-drawn graphics
+It's quite simple but still better, then ASCII
 
 ### Restoration of the lost connection
 If connection was lost, the game tries to restore it in several attempts (with increasing pause between tries).

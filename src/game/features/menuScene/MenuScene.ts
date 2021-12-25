@@ -1,18 +1,18 @@
 import Phaser from 'phaser';
 
-import { SCENE_ENTER_CODE, SCENE_MENU } from '../../constants/sceneName';
-import Game from '../features/game/Game';
-import GameService from '../features/game/GameService';
-import WsClientRegistry from '../features/registry/WsClientRegistry';
-import OrderedGroup from '../objects/group/OrderedGroup';
-import ContinueMenuButton from '../objects/menu/ContinueMenuButton';
-import ControlsDescription from '../objects/menu/ControlsDescription';
-import EnterCodeMenuButton from '../objects/menu/EnterCodeMenuButton';
-import QuitMenuButton from '../objects/menu/QuitMenuButton';
-import RestartMenuButton from '../objects/menu/RestartMenuButton';
-import StartMenuButton from '../objects/menu/StartMenuButton';
-import { EnterCodeData } from './transition/enterCodeTransitionData';
-import { GamePauseData, GameWastedData } from './transition/gameTransitionData';
+import { SCENE_ENTER_CODE, SCENE_MENU } from '../../../constants/sceneName';
+import Game from '../game/Game';
+import GameService from '../game/GameService';
+import WsClientRegistry from '../registry/WsClientRegistry';
+import OrderedGroup from '../../objects/group/OrderedGroup';
+import ContinueMenuButton from '../../objects/menu/ContinueMenuButton';
+import ControlsDescription from '../../objects/menu/ControlsDescription';
+import EnterCodeMenuButton from '../../objects/menu/EnterCodeMenuButton';
+import QuitMenuButton from '../../objects/menu/QuitMenuButton';
+import RestartMenuButton from '../../objects/menu/RestartMenuButton';
+import StartMenuButton from '../../objects/menu/StartMenuButton';
+import { EnterCodeData } from '../../scenes/transition/enterCodeTransitionData';
+import { GamePauseData, GameWastedData } from '../../scenes/transition/gameTransitionData';
 
 type MenuSceneData = GamePauseData & GameWastedData;
 

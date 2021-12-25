@@ -3,10 +3,10 @@ import { useEffect, useRef } from 'react';
 import EnterCodeScene from '../game/features/enterCodeScene/EnterCodeScene';
 import PhaserGame from '../game/PhaserGame';
 import config from '../game/config';
-import EndGameScene from '../game/scenes/EndGameScene';
+import EndGameScene from '../game/features/endGameScene/EndGameScene';
 import GameScene from '../game/features/gameScene/GameScene';
-import MenuScene from '../game/scenes/MenuScene';
-import PreloadScene from '../game/scenes/PreloadScene';
+import MenuScene from '../game/features/menuScene/MenuScene';
+import PreloadScene from '../game/features/preloadScene/PreloadScene';
 
 const PipesPuzzle = () => {
   const divRef = useRef<HTMLDivElement>(null);

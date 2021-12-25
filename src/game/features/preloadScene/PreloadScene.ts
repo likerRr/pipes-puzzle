@@ -1,10 +1,10 @@
-import { SCENE_MENU, SCENE_PRELOAD } from '../../constants/sceneName';
-import BrowserWebSocketService from '../../lib/ws/BrowserWebSocketService';
-import WebSocketClient from '../../lib/wsClient/WebSocketClient';
-import Game from '../features/game/Game';
-import WsClientRegistry from '../features/registry/WsClientRegistry';
-import FireworksTexture from '../objects/fireworks/FireworksTexture';
-import PipesTexture from '../resources/PipesTexture';
+import { SCENE_MENU, SCENE_PRELOAD } from '../../../constants/sceneName';
+import BrowserWebSocketService from '../../../lib/ws/BrowserWebSocketService';
+import WebSocketClient from '../../../lib/wsClient/WebSocketClient';
+import Game from '../game/Game';
+import WsClientRegistry from '../registry/WsClientRegistry';
+import FireworksTexture from '../../objects/fireworks/FireworksTexture';
+import PipesTexture from '../../resources/PipesTexture';
 
 class PreloadScene extends Phaser.Scene {
   constructor() {

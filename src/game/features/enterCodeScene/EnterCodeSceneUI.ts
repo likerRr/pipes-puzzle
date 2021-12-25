@@ -76,14 +76,26 @@ class EnterCodeSceneUI {
 
   private initKeyboardControls(props: InitKeyboardProps) {
     this.scene.input.keyboard.on(Phaser.Input.Keyboard.Events.ANY_KEY_DOWN, (e: KeyboardEvent) => {
+      if (e.keyCode === Phaser.Input.Keyboard.KeyCodes.V && e.ctrlKey) {
+        const promise = navigator.clipboard.readText();
+
+        promise.then(text => this.updateTextCode(text));
+
+        return;
+      }
+
       const char = e.key;
 
       if (char.match(/^[a-zA-Z3-6]$/)) {
         this.updateTextCode(this.code + char);
+
+        return;
       }
 
       if (e.keyCode === Phaser.Input.Keyboard.KeyCodes.BACKSPACE) {
         this.updateTextCode(this.code.slice(0, -1));
+
+        return;
       }
     });
 

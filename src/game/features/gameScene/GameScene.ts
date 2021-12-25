@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import { SCENE_GAME } from '../../../constants/sceneName';
 import { Message, MessageVerifyData } from '../../../lib/wsClient/messages/Message';
 import MessageConverter from '../../../lib/wsClient/MessageConverter';
+import Device from '../device/Device';
 import GameSceneCreateData from './GameSceneCreateData';
 import GameSceneUI from './GameSceneUI';
 import MapDrawer from '../map/MapDrawer';
@@ -32,12 +33,14 @@ class GameScene extends Phaser.Scene {
         wsClient.send(MessageConverter.toRotate(x, y));
       },
     });
+    const device = new Device(this);
     const ui = new GameSceneUI(
       this,
       sceneData.level,
       mapDrawer,
       matrixPresenter,
       matrixMask,
+      device,
     );
 
     ui.draw({

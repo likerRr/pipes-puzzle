@@ -1,15 +1,24 @@
 import Phaser from 'phaser';
+import { Swipe } from 'phaser3-rex-plugins/plugins/gestures';
 
 import difficulty from '../../../constants/difficulty';
 import { SCENE_END_GAME, SCENE_GAME, SCENE_MENU } from '../../../constants/sceneName';
 import Container from '../../../lib/phaser/Container';
 import { MenuButtonOnClickHandler } from '../../objects/menu/MenuButton';
 import SubmitMenuButton from '../../objects/menu/SubmitMenuButton';
+import Device from '../device/Device';
 import EndGameSceneCreateData from '../endGameScene/EndGameSceneCreateData';
 import MapDrawer from '../map/MapDrawer';
 import MatrixMask from '../map/MatrixMask';
 import MatrixPresenter from '../map/MatrixPresenter';
 import { MenuSceneFromLimitReached, MenuSceneFromPause } from '../menuScene/MenuSceneCreateData';
+
+type Swipeable = {
+  left: boolean,
+  right: boolean,
+  down: boolean,
+  up: boolean,
+}
 
 export type SubmitButtonProps = {
   onSubmitClick: MenuButtonOnClickHandler,
@@ -46,6 +55,7 @@ class GameSceneUI {
     private mapDrawer: MapDrawer,
     private matrixPresenter: MatrixPresenter<string>,
     private matrixMask: MatrixMask<string>,
+    private device: Device,
   ) {
     this.mapWidth = matrixPresenter.getWidth();
     this.mapHeight = matrixPresenter.getHeight();
@@ -194,6 +204,30 @@ class GameSceneUI {
       this.matrixMask.moveUp(1);
       this.drawMap();
     });
+
+    if (this.device.isTouch()) {
+      const swipeGesture = new Swipe(this.scene, {
+        enable: true,
+        dir: '4dir',
+        velocityThreshold: 800,
+      });
+
+      swipeGesture.on('swipe', (swipe: Swipeable) => {
+        if (swipe.right) {
+          this.matrixMask.moveLeft(1);
+          this.drawMap();
+        } else if (swipe.left) {
+          this.matrixMask.moveRight(1);
+          this.drawMap();
+        } else if (swipe.down) {
+          this.matrixMask.moveUp(1);
+          this.drawMap();
+        } else if (swipe.up) {
+          this.matrixMask.moveDown(1);
+          this.drawMap();
+        }
+      });
+    }
   }
 
   private initMapPointerControls() {

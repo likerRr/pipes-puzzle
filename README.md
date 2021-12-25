@@ -104,7 +104,8 @@ There is a challenge with displaying big maps like 1000x1000. The problems are:
 
 I think there is no sense to show all the map at one moment. 
 Thus, I limited playing area by 8x8 map and gave ability to move it by keyboard arrows or by swipes on mobile. 
-So it means that user always sees just a part of the whole puzzle
+So that means that user always sees just a part of the whole puzzle.
+Also I disabled emitting events when user holds arrow button in order to prevent extra calculations on big levels
 
 ### Phaser and Typescript
 The most difficulties were with Phaser and Typescript, because I don't work with them very often, and I spent lots of time in googling and struggling with strange things.

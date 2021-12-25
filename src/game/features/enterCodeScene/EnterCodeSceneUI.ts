@@ -80,7 +80,7 @@ class EnterCodeSceneUI {
         try {
           const promise = navigator.clipboard.readText();
 
-          promise.then(text => this.updateTextCode(text));
+          promise.then(text => this.updateTextCode(text.slice(0, 30)));
         } catch (err) {
           // clipboard not supported or access haven't been granted
         }

@@ -11,6 +11,7 @@ import EnterCodeMenuButton from '../objects/menu/EnterCodeMenuButton';
 import QuitMenuButton from '../objects/menu/QuitMenuButton';
 import RestartMenuButton from '../objects/menu/RestartMenuButton';
 import StartMenuButton from '../objects/menu/StartMenuButton';
+import { EnterCodeData } from './transition/enterCodeTransitionData';
 import { GamePauseData, GameWastedData } from './transition/gameTransitionData';
 
 type MenuSceneData = GamePauseData & GameWastedData;
@@ -52,10 +53,15 @@ class MenuScene extends Phaser.Scene {
 
       const wsClient = WsClientRegistry.getWsClient(this.registry);
       const gameService = new GameService(this, wsClient);
+      const enterCodeData: EnterCodeData = {
+        goBack: () => {
+          this.scene.start();
+        }
+      };
 
       orderedGroup.add([
         new StartMenuButton(this).setOnClickHandler(() => gameService.startNewGame(Game.STARTING_LEVEL)),
-        new EnterCodeMenuButton(this).setOnClickHandler(() => this.scene.start(SCENE_ENTER_CODE)),
+        new EnterCodeMenuButton(this).setOnClickHandler(() => this.scene.start(SCENE_ENTER_CODE, enterCodeData)),
         new ControlsDescription(this),
       ]);
     }

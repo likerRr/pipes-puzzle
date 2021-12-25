@@ -187,8 +187,11 @@ class GameSceneUI {
 
   private initControls(props: ControlsProps) {
     this.initMapMovementControls();
-    this.initMapPointerControls();
     this.initPauseControls(props);
+
+    if (!this.device.isTouch()) {
+      this.initMapPointerControls();
+    }
   }
 
   private initMapMovementControls() {

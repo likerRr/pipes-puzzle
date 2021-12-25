@@ -4,6 +4,14 @@
 
 [DEMO](https://pipes-puzzle.vercel.app/)
 
+<details>
+    <summary>Screenshots</summary>
+
+![Gameplay](/showcase/gameplay_0.png)
+</details>
+
+## Showcase
+
 ## Installation
 ```shell
 git clone git@github.com:likerRr/pipes-puzzle.git

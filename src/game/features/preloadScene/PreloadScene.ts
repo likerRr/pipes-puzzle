@@ -4,7 +4,7 @@ import WebSocketClient from '../../../lib/wsClient/WebSocketClient';
 import Game from '../game/Game';
 import WsClientRegistry from '../registry/WsClientRegistry';
 import FireworksTexture from '../../objects/fireworks/FireworksTexture';
-import PipesTexture from '../../resources/PipesTexture';
+import PipesTexture from '../map/pipes/PipesTexture';
 
 class PreloadScene extends Phaser.Scene {
   constructor() {

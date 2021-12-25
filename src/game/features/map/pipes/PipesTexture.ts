@@ -1,5 +1,5 @@
-import { TEXTURE_PIPES } from '../../constants/textureName';
-import PreloadedTexture from './PreloadedTexture';
+import { TEXTURE_PIPES } from '../../../../constants/textureName';
+import PreloadedTexture from '../../../resources/PreloadedTexture';
 
 class PipesTexture extends PreloadedTexture {
   preload(): void {

@@ -1,11 +1,11 @@
 import Phaser from 'phaser';
 
-import CrossPipeFactory from '../../objects/pipes/CrossPipeFactory';
-import CurvedPipeFactory from '../../objects/pipes/CurvedPipeFactory';
-import PipeFactory from '../../objects/pipes/PipeFactory';
-import LongPipeFactory from '../../objects/pipes/LongPipeFactory';
-import ShortPipeFactory from '../../objects/pipes/ShortPipeFactory';
-import TShapedPipeFactory from '../../objects/pipes/TShapedPipeFactory';
+import CrossPipeFactory from './pipes/CrossPipeFactory';
+import CurvedPipeFactory from './pipes/CurvedPipeFactory';
+import PipeFactory from './pipes/PipeFactory';
+import LongPipeFactory from './pipes/LongPipeFactory';
+import ShortPipeFactory from './pipes/ShortPipeFactory';
+import TShapedPipeFactory from './pipes/TShapedPipeFactory';
 
 export type MapDrawerOptions = {
   onPipeClick?: (rowIndex: number, colIndex: number, value: string) => void,

@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import { TEXTURE_PIPES } from '../../../constants/textureName';
+import { TEXTURE_PIPES } from '../../../../constants/textureName';
 
 class PipeTile extends Phaser.GameObjects.Sprite {
   constructor(

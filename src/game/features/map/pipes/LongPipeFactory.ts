@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import { TEXTURE_PIPES_FRAME } from '../../../constants/textureName';
+import { TEXTURE_PIPES_FRAME } from '../../../../constants/textureName';
 import PipeFactory from './PipeFactory';
 import Pipe, { PipeVariant } from './Pipe';
 import PipeTile from './PipeTile';

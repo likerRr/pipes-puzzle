@@ -13,7 +13,7 @@ export type MapDrawerOptions = {
   y?: number,
 };
 
-const PIPE_WIDTH = 32;
+const PIPE_WIDTH = 64;
 
 class MapDrawer {
   private readonly container: Phaser.GameObjects.Container;

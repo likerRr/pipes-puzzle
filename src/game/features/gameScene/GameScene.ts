@@ -21,8 +21,8 @@ class GameScene extends Phaser.Scene {
     const matrixMask = new MatrixMask(matrixPresenter, {
       rowsOffset: 0,
       colsOffset: 0,
-      visibleCols: 10,
-      visibleRows: 10,
+      visibleCols: 8,
+      visibleRows: 8,
     });
     const wsClient = WsClientRegistry.getWsClient(this.registry);
     const gameService = new GameService(this, wsClient);

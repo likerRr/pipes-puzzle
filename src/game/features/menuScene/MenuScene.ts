@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import { SCENE_ENTER_CODE, SCENE_MENU } from '../../../constants/sceneName';
+import Device from '../device/Device';
 import EnterCodeSceneCreateData from '../enterCodeScene/EnterCodeSceneCreateData';
 import Game from '../game/Game';
 import GameService from '../game/GameService';
@@ -23,13 +24,15 @@ class MenuScene extends Phaser.Scene {
     const orderedGroup = new OrderedGroup(this, 0, 200, {
       padding: 20,
     });
+    const device = new Device(this);
+    const controlsDescription = new ControlsDescription(this, device);
 
     if (data.isPause) {
       orderedGroup.add([
         new ContinueMenuButton(this).setOnClickHandler(() => data.resume()),
         new RestartMenuButton(this).setOnClickHandler(() => data.restart()),
         new QuitMenuButton(this).setOnClickHandler(() => Game.restartScenesToMenu(this)),
-        new ControlsDescription(this),
+        controlsDescription,
       ]);
 
       this.addCloseMenuEvent(() => data.resume());
@@ -58,7 +61,7 @@ class MenuScene extends Phaser.Scene {
       orderedGroup.add([
         new StartMenuButton(this).setOnClickHandler(() => gameService.startNewGame(Game.STARTING_LEVEL)),
         new EnterCodeMenuButton(this).setOnClickHandler(() => this.scene.start(SCENE_ENTER_CODE, enterCodeData)),
-        new ControlsDescription(this),
+        controlsDescription,
       ]);
     }
   }

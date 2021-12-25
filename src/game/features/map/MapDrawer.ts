@@ -4,6 +4,7 @@ import CrossPipeFactory from './pipes/CrossPipeFactory';
 import CurvedPipeFactory from './pipes/CurvedPipeFactory';
 import PipeFactory from './pipes/PipeFactory';
 import LongPipeFactory from './pipes/LongPipeFactory';
+import PipesTexture from './pipes/PipesTexture';
 import ShortPipeFactory from './pipes/ShortPipeFactory';
 import TShapedPipeFactory from './pipes/TShapedPipeFactory';
 
@@ -12,8 +13,6 @@ export type MapDrawerOptions = {
   x?: number,
   y?: number,
 };
-
-const PIPE_WIDTH = 64;
 
 class MapDrawer {
   private readonly container: Phaser.GameObjects.Container;
@@ -51,8 +50,8 @@ class MapDrawer {
           if (pipeFactory.pattern.includes(col)) {
             const pipe = pipeFactory.create(
               scene,
-              x * PIPE_WIDTH,
-              y * PIPE_WIDTH,
+              x * PipesTexture.SIZE,
+              y * PipesTexture.SIZE,
               col,
             );
 

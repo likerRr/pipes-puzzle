@@ -88,7 +88,7 @@ class MatrixMask<T> {
     this.updateOffset('rowsOffset', colsOffset);
   }
 
-  private updateOffset(key: keyof Pick<MatrixOptions, "colsOffset" | "rowsOffset">, value: number) {
+  private updateOffset(key: keyof Pick<MatrixOptions, 'colsOffset' | 'rowsOffset'>, value: number) {
     this.options = {
       ...this.options,
       [key]: value,

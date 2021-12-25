@@ -4,7 +4,7 @@ import { SCENE_GAME } from '../../../constants/sceneName';
 import MessageConverter from '../../../lib/wsClient/MessageConverter';
 import { Message, MessageMapData, MessageNewData } from '../../../lib/wsClient/messages/Message';
 import WebSocketClient from '../../../lib/wsClient/WebSocketClient';
-import { MenuStartGameData } from '../../scenes/transition/menuTransitionData';
+import GameSceneCreateData from '../gameScene/GameSceneCreateData';
 
 export type StartNewGameOptions = {
   onNewGameFailure?: CallableFunction,
@@ -32,7 +32,7 @@ class GameService {
     });
 
     const offMap = wsClient.on<MessageMapData>(Message.Map, map => {
-      const data: MenuStartGameData = {
+      const data: GameSceneCreateData = {
         level,
         map,
       };

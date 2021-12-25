@@ -5,10 +5,11 @@ import { SCENE_END_GAME, SCENE_GAME, SCENE_MENU } from '../../../constants/scene
 import Container from '../../../lib/phaser/Container';
 import { MenuButtonOnClickHandler } from '../../objects/menu/MenuButton';
 import SubmitMenuButton from '../../objects/menu/SubmitMenuButton';
-import { GamePauseData, MapDoneData } from '../../scenes/transition/gameTransitionData';
+import EndGameSceneCreateData from '../endGameScene/EndGameSceneCreateData';
 import MapDrawer from '../map/MapDrawer';
 import MatrixMask from '../map/MatrixMask';
 import MatrixPresenter from '../map/MatrixPresenter';
+import { MenuSceneFromLimitReached, MenuSceneFromPause } from '../menuScene/MenuSceneCreateData';
 
 export type SubmitButtonProps = {
   onSubmitClick: MenuButtonOnClickHandler,
@@ -61,7 +62,7 @@ class GameSceneUI {
   pauseGame(onStartNewGame: (level: number) => void) {
     this.scene.scene.sleep();
 
-    const data: GamePauseData = {
+    const data: MenuSceneFromPause = {
       isPause: true,
       resume: () => {
         this.scene.scene.stop(SCENE_MENU);
@@ -80,7 +81,7 @@ class GameSceneUI {
   finishLevel(password: string) {
     this.scene.scene.stop();
 
-    const data: MapDoneData = {
+    const data: EndGameSceneCreateData = {
       level: this.level,
       password,
     };
@@ -93,9 +94,11 @@ class GameSceneUI {
   }
 
   handleLimitReached() {
-    this.scene.scene.start(SCENE_MENU, {
-      wasted: true,
-    });
+    const data: MenuSceneFromLimitReached = {
+      wasted: true
+    };
+
+    this.scene.scene.start(SCENE_MENU, data);
   }
 
   handlePipeClick(x: number, y: number, value: string) {

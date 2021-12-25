@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import { SCENE_ENTER_CODE, SCENE_MENU } from '../../../constants/sceneName';
+import EnterCodeSceneCreateData from '../enterCodeScene/EnterCodeSceneCreateData';
 import Game from '../game/Game';
 import GameService from '../game/GameService';
 import WsClientRegistry from '../registry/WsClientRegistry';
@@ -11,19 +12,14 @@ import EnterCodeMenuButton from '../../objects/menu/EnterCodeMenuButton';
 import QuitMenuButton from '../../objects/menu/QuitMenuButton';
 import RestartMenuButton from '../../objects/menu/RestartMenuButton';
 import StartMenuButton from '../../objects/menu/StartMenuButton';
-import { EnterCodeData } from '../../scenes/transition/enterCodeTransitionData';
-import { GamePauseData, GameWastedData } from '../../scenes/transition/gameTransitionData';
-
-type MenuSceneData = GamePauseData & GameWastedData;
-
-type GameResumable = Pick<MenuSceneData, "resume">;
+import MenuSceneCreateData from './MenuSceneCreateData';
 
 class MenuScene extends Phaser.Scene {
   constructor() {
     super(SCENE_MENU);
   }
 
-  create(data: MenuSceneData) {
+  create(data: MenuSceneCreateData) {
     const orderedGroup = new OrderedGroup(this, 0, 200, {
       padding: 20,
     });
@@ -36,7 +32,7 @@ class MenuScene extends Phaser.Scene {
         new ControlsDescription(this),
       ]);
 
-      this.addCloseMenuEvent(data);
+      this.addCloseMenuEvent(() => data.resume());
     } else {
       if (data.wasted) {
         const text = this.scene.scene.add.text(0, 0, 'Too many attempts. You lose!', { align: 'center', font: '48px Arial', color: 'red' });
@@ -53,7 +49,7 @@ class MenuScene extends Phaser.Scene {
 
       const wsClient = WsClientRegistry.getWsClient(this.registry);
       const gameService = new GameService(this, wsClient);
-      const enterCodeData: EnterCodeData = {
+      const enterCodeData: EnterCodeSceneCreateData = {
         goBack: () => {
           this.scene.start();
         }
@@ -67,10 +63,10 @@ class MenuScene extends Phaser.Scene {
     }
   }
 
-  private addCloseMenuEvent(data: GameResumable) {
+  private addCloseMenuEvent(onClose: CallableFunction) {
     const escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
-    escKey.on(Phaser.Input.Keyboard.Events.DOWN, () => data.resume());
+    escKey.on(Phaser.Input.Keyboard.Events.DOWN, onClose);
   }
 }
 

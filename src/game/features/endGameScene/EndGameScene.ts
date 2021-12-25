@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 
 import { SCENE_END_GAME } from '../../../constants/sceneName';
+import ProgressLocalStorage from '../progress/ProgressLocalStorage';
+import ProgressManager from '../progress/ProgressManager';
 import EndGameSceneCreateData from './EndGameSceneCreateData';
 import EndGameUI from './EndGameUI';
 import Game from '../game/Game';
@@ -15,10 +17,17 @@ class EndGameScene extends Phaser.Scene {
   create(data: EndGameSceneCreateData) {
     const wsClient = WsClientRegistry.getWsClient(this.registry);
     const gameService = new GameService(this, wsClient);
+    const progressStorage = new ProgressLocalStorage();
+    const progressManager = new ProgressManager(progressStorage);
+    const nextLevel = Game.getNextLevel(data.level);
+
     const ui = new EndGameUI(this, () => {
-      gameService.startNewGame(Game.getNextLevel(data.level));
+      gameService.startNewGame(nextLevel);
     });
 
+    progressManager.save({
+      level: nextLevel,
+    });
     ui.show(data.password);
   }
 }

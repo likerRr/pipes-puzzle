@@ -65,6 +65,9 @@ User can play from touch screen devices
 
 * swipes support
 
+### Save/load progression
+After finishing a level, progress is stored in localStorage and then user can choose from the main menu to continue from the next level
+
 ## Design & Architecture decisions
 
 ### Types and interfaces

@@ -5,6 +5,8 @@ import Device from '../device/Device';
 import EnterCodeSceneCreateData from '../enterCodeScene/EnterCodeSceneCreateData';
 import Game from '../game/Game';
 import GameService from '../game/GameService';
+import ProgressLocalStorage from '../progress/ProgressLocalStorage';
+import ProgressManager from '../progress/ProgressManager';
 import WsClientRegistry from '../registry/WsClientRegistry';
 import OrderedGroup from '../../objects/group/OrderedGroup';
 import ContinueMenuButton from '../../objects/menu/ContinueMenuButton';
@@ -26,6 +28,8 @@ class MenuScene extends Phaser.Scene {
     });
     const device = new Device(this);
     const controlsDescription = new ControlsDescription(this, device);
+    const progressStorage = new ProgressLocalStorage();
+    const progressManager = new ProgressManager(progressStorage);
 
     if (data.isPause) {
       orderedGroup.add([
@@ -58,8 +62,19 @@ class MenuScene extends Phaser.Scene {
         }
       };
 
+      const progress = progressManager.load();
+
+      if (progress?.level) {
+        orderedGroup.add([
+          new ContinueMenuButton(this).setOnClickHandler(() => gameService.startNewGame(progress.level)),
+        ]);
+      }
+
       orderedGroup.add([
-        new StartMenuButton(this).setOnClickHandler(() => gameService.startNewGame(Game.STARTING_LEVEL)),
+        new StartMenuButton(this).setOnClickHandler(() => {
+          progressManager.delete();
+          gameService.startNewGame(Game.STARTING_LEVEL);
+        }),
         new EnterCodeMenuButton(this).setOnClickHandler(() => this.scene.start(SCENE_ENTER_CODE, enterCodeData)),
         controlsDescription,
       ]);

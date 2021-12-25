@@ -3,10 +3,12 @@ import Phaser from 'phaser';
 import Container from '../../../lib/phaser/Container';
 
 type OrderedGroupConfig = {
-  padding: number,
+  direction: 'vertical' | 'horizontal',
+  padding?: number,
 };
 
-const defaultConfig = {
+const defaultConfig: OrderedGroupConfig = {
+  direction: 'vertical',
   padding: 0,
 };
 
@@ -17,8 +19,12 @@ class OrderedGroup {
     private scene: Phaser.Scene,
     x: number,
     y: number,
-    private config: OrderedGroupConfig = defaultConfig
+    private config: OrderedGroupConfig = defaultConfig,
   ) {
+    this.config = {
+      ...defaultConfig,
+      ...config,
+    }
     this.container = scene.add.container(x, y);
 
     this.updateLayout();
@@ -35,7 +41,9 @@ class OrderedGroup {
   updateLayout() {
     Container.alignInCamera(this.container, this.scene.cameras.main, 'x');
 
-    this.alignItemsHorizontally();
+    if (this.config.direction === 'vertical') {
+      this.alignItemsHorizontally();
+    }
   }
 
   alignItemsHorizontally() {
@@ -47,16 +55,29 @@ class OrderedGroup {
   }
 
   private push<T extends Phaser.GameObjects.Text>(gameObject: T) {
-    gameObject.setY(this.getNextItemY());
+    if (this.config.direction === 'vertical') {
+      gameObject.setY(this.getNextItemY());
+    }
+
+    if (this.config.direction === 'horizontal') {
+      gameObject.setX(this.getNextItemX());
+    }
 
     this.container.add(gameObject);
   }
 
   private getNextItemY(): number {
     const rect = this.container.getBounds();
-    const padding = rect.height === 0 ? 0 : this.config.padding;
+    const padding = rect.height === 0 ? 0 : this.config.padding as number;
 
     return rect.height + padding;
+  }
+
+  private getNextItemX(): number {
+    const rect = this.container.getBounds();
+    const padding = rect.width === 0 ? 0 : this.config.padding as number;
+
+    return rect.width + padding;
   }
 }
 

@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import { SCENE_GAME } from '../../../constants/sceneName';
+import MessageConverter from '../../../lib/wsClient/MessageConverter';
 import { Message, MessageMapData, MessageNewData } from '../../../lib/wsClient/messages/Message';
 import WebSocketClient from '../../../lib/wsClient/WebSocketClient';
 import { MenuStartGameData } from '../../scenes/transition/menuTransitionData';
@@ -18,7 +19,7 @@ class GameService {
   startNewGame(level: number, options?: StartNewGameOptions) {
     const { wsClient } = this;
 
-    wsClient.send(WebSocketClient.getNewMessage(level));
+    wsClient.send(MessageConverter.toNewMessage(level));
 
     const offNew = wsClient.on<MessageNewData>(Message.New, isOk => {
       if (!isOk) {
@@ -27,7 +28,7 @@ class GameService {
         return;
       }
 
-      wsClient.send(WebSocketClient.getMap());
+      wsClient.send(MessageConverter.toMap());
     });
 
     const offMap = wsClient.on<MessageMapData>(Message.Map, map => {

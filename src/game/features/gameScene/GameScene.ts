@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 
 import { SCENE_GAME } from '../../../constants/sceneName';
 import { Message, MessageVerifyData } from '../../../lib/wsClient/messages/Message';
-import WebSocketClient from '../../../lib/wsClient/WebSocketClient';
+import MessageConverter from '../../../lib/wsClient/MessageConverter';
 import GameSceneUI from './GameSceneUI';
 import MapDrawer from '../map/MapDrawer';
 import MatrixPresenter from '../map/MatrixPresenter';
@@ -29,7 +29,7 @@ class GameScene extends Phaser.Scene {
     const mapDrawer = new MapDrawer(this, {
       onPipeClick: (x, y, value) => {
         ui.handlePipeClick(x, y, value);
-        wsClient.send(WebSocketClient.getRotate(x, y));
+        wsClient.send(MessageConverter.toRotate(x, y));
       },
     });
     const ui = new GameSceneUI(
@@ -42,7 +42,7 @@ class GameScene extends Phaser.Scene {
 
     ui.draw({
       onSubmitClick() {
-        wsClient.send(WebSocketClient.getVerify());
+        wsClient.send(MessageConverter.toVerify());
       },
       onPause: () => {
         ui.pauseGame(level => {

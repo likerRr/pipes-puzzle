@@ -34,23 +34,6 @@ class WebSocketClient {
     this.ws.send(message);
   }
 
-  // TODO move to some kind of messages converter
-  static getNewMessage(level: number) {
-    return `${Message.New} ${level}`;
-  }
-
-  static getMap() {
-    return Message.Map;
-  }
-
-  static getRotate(x: number, y: number) {
-    return `${Message.Rotate} ${x} ${y}`;
-  }
-
-  static getVerify() {
-    return Message.Verify;
-  }
-
   private static parseMessageData(data: string): [Message, any] {
     try {
       const [commandLine, ...rest] = data.split('\r\n');

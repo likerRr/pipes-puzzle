@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import { SCENE_ENTER_CODE, SCENE_MENU } from '../../../constants/sceneName';
+import { SCENE_ENTER_CODE, SCENE_FRAME, SCENE_MENU } from '../../../constants/sceneName';
 import { TEXTURE_LOGO } from '../../../constants/textureName';
 import Device from '../device/Device';
 import EnterCodeSceneCreateData from '../enterCodeScene/EnterCodeSceneCreateData';
@@ -24,6 +24,8 @@ class MenuScene extends Phaser.Scene {
   }
 
   create(data: MenuSceneCreateData) {
+    this.scene.run(SCENE_FRAME);
+
     const orderedGroup = new OrderedGroup(this, 0, 200, {
       padding: 20,
     });

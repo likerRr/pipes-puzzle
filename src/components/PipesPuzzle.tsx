@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 import EnterCodeScene from '../game/features/enterCodeScene/EnterCodeScene';
+import FrameScene from '../game/features/frameScene/FrameScene';
 import PhaserGame from '../game/PhaserGame';
 import config from '../game/config';
 import EndGameScene from '../game/features/endGameScene/EndGameScene';
@@ -15,7 +16,14 @@ const PipesPuzzle = () => {
     const phaserGame = new PhaserGame(config);
 
     if (divRef.current) {
-      const game = phaserGame.start(divRef.current, [PreloadScene, MenuScene, GameScene, EndGameScene, EnterCodeScene]);
+      const game = phaserGame.start(divRef.current, [
+        PreloadScene,
+        MenuScene,
+        GameScene,
+        EndGameScene,
+        EnterCodeScene,
+        FrameScene,
+      ]);
 
       return () => {
         game.destroy(true);

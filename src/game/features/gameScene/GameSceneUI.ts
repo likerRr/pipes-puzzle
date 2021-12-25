@@ -9,9 +9,11 @@ import MenuButton, { MenuButtonOnClickHandler } from '../../objects/menu/MenuBut
 import SubmitMenuButton from '../../objects/menu/SubmitMenuButton';
 import Device from '../device/Device';
 import EndGameSceneCreateData from '../endGameScene/EndGameSceneCreateData';
+import FrameTexture from '../frameScene/FrameTexture';
 import MapDrawer from '../map/MapDrawer';
 import MatrixMask from '../map/MatrixMask';
 import MatrixPresenter from '../map/MatrixPresenter';
+import PipesTexture from '../map/pipes/PipesTexture';
 import { MenuSceneFromLimitReached, MenuSceneFromPause } from '../menuScene/MenuSceneCreateData';
 
 type Swipeable = {
@@ -138,7 +140,10 @@ class GameSceneUI {
     const { mapDrawer, matrixMask } = this;
 
     mapDrawer.draw(matrixMask.apply());
-    mapDrawer.withContainer(container => Container.alignInCamera(container, this.scene.cameras.main));
+    mapDrawer.withContainer(container => {
+      Container.alignInCamera(container, this.scene.cameras.main);
+      container.setX(container.x + PipesTexture.SIZE / 2 + FrameTexture.SIZE_THICKNESS);
+    });
 
     const bounds = mapDrawer.getBounds();
     const mask = matrixMask.getBounds();

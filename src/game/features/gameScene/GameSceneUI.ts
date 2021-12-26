@@ -115,7 +115,9 @@ class GameSceneUI {
   }
 
   handlePipeClick(x: number, y: number, value: string) {
-    this.matrixPresenter.updateAt(x, y, value);
+    const { rowsOffset, colsOffset } = this.matrixMask.getBounds();
+
+    this.matrixPresenter.updateAt(x + colsOffset, y + rowsOffset, value);
   }
 
   private createDifficultyLabel() {

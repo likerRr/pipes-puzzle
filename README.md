@@ -5,12 +5,14 @@
 [DEMO](https://pipes-puzzle.vercel.app/)
 
 <details>
-    <summary>Screenshots</summary>
+    <summary>Showcase</summary>
 
 ![Gameplay](/showcase/gameplay_0.png)
-</details>
 
-## Showcase
+https://user-images.githubusercontent.com/1290558/147395741-584a06fd-3af9-4141-9c36-e02ddbbe9e8b.mp4
+
+
+</details>
 
 ## Installation
 ```shell

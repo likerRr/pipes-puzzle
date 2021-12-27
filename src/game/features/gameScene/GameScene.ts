@@ -28,7 +28,11 @@ class GameScene extends Phaser.Scene {
     const wsClient = WsClientRegistry.getWsClient(this.registry);
     const gameService = new GameService(this, wsClient);
     const mapDrawer = new MapDrawer(this, {
-      onPipeClick: (x, y, value) => {
+      onPipeClick: (maskX, maskY, value) => {
+        const { rowsOffset, colsOffset } = matrixMask.getBounds();
+        const x = maskX + colsOffset;
+        const y = maskY + rowsOffset;
+
         ui.handlePipeClick(x, y, value);
         wsClient.send(MessageConverter.toRotate(x, y));
       },
